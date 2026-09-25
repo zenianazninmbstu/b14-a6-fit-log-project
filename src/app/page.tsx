@@ -1,5 +1,6 @@
 import { Star, Flame, Clock } from "lucide-react";
 import Link from "next/link";
+import Banner from "./components/Banner";
 
 type Workout = {
   id: number;
@@ -31,12 +32,18 @@ export default async function Home() {
 
   const workouts = await getWorkouts();
 
-
+ 
 
  return (
-<div className="min-h-screen bg-black mx-8">
-  
- <h1 className="text-3xl font-bold text-white">THE LIBRARY</h1>
+<>
+
+
+   <div className="mx-4 bg-black ">
+      <Banner />
+    </div>
+<div id="library" className="min-h-screen bg-black mx-4 ">
+   <div className="mx-8">
+ <h1 className="text-3xl font-bold text-white mt-20">THE LIBRARY</h1>
 
 <p className=" text-white m-0 mb-6">
   Twelve lifts covering every major muscle group.
@@ -45,7 +52,7 @@ export default async function Home() {
 
 
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-white">
+<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-white">
     {workouts.map((workout:Workout ) => (
 
       <Link
@@ -67,7 +74,8 @@ className="w-full mb-4"
   {workout.muscleGroups.map((muscle) => (
     <span
     key={muscle}
-     className="rounded-full bg-lime-400 px-3 py-1 text-xs font-bold text-white mb-4"
+     className="rounded-full bg-lime-400 px-3 py-1 text-xs font-bold
+     text-black mb-4"
     >
     {muscle}
     </span>
@@ -76,7 +84,9 @@ className="w-full mb-4"
 </div>
 
 
-<h2 className="font-bold font-3xl">{workout.name}</h2>
+<h2 className="text-[18px] font-bold leading-[28px]">
+  {workout.name}
+  </h2>
 
 
 <p className="text-sm font-normal text-gray-400">
@@ -110,7 +120,8 @@ className="w-full mb-4"
      
   </div>
   </div>
-  
+  </div>
+  </>
  )
 
 
