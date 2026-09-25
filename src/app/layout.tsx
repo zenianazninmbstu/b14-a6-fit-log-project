@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { FitLogProvider } from "./context/FitLogContext";
+import Footer from "./components/Footer";
 
 
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 <FitLogProvider>
    <Navbar />
   {children}
+    <Footer />
 </FitLogProvider>
         
         </body>

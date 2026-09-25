@@ -1,6 +1,6 @@
-import { Star, Flame, Clock } from "lucide-react";
-import Link from "next/link";
+
 import Banner from "./components/Banner";
+import WorkoutList from "./components/WorkoutList";
 
 type Workout = {
   id: number;
@@ -49,76 +49,10 @@ export default async function Home() {
   Twelve lifts covering every major muscle group.
 </p>
 
+<WorkoutList workouts={workouts} />
 
 
 
-<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-white">
-    {workouts.map((workout:Workout ) => (
-
-      <Link
-  key={workout.id}
-  href={`/workouts/${workout.id}`}
-  className="block overflow-hidden rounded-xl border border-gray-800 bg-[#15171c]"
->
-      
-
-
-<img 
-src = {workout.image} 
-alt= {workout.name}
-className="w-full mb-4"
-/>
-
-<div className="p-4">
-<div className="flex gap-2 ">
-  {workout.muscleGroups.map((muscle) => (
-    <span
-    key={muscle}
-     className="rounded-full bg-lime-400 px-3 py-1 text-xs font-bold
-     text-black mb-4"
-    >
-    {muscle}
-    </span>
-
-  ))}
-</div>
-
-
-<h2 className="text-[18px] font-bold leading-[28px]">
-  {workout.name}
-  </h2>
-
-
-<p className="text-sm font-normal text-gray-400">
-  {workout.equipment}
-</p>
-
-<hr className="my-6 border-gray-700" />
-
-<div className="flex items-center gap-4 text-sm text-gray-400">
-  <span className="flex items-center gap-1">
-    <Clock size={15} />
-    {workout.duration} min
-  </span>
-
-  <span className="flex items-center gap-1">
-    <Flame size={15} />
-    {workout.caloriesBurned} kcal
-  </span>
-
-  <span className="flex items-center gap-1">
-    <Star size={15} />
-    {workout.rating}
-  </span>
-  </div>
-</div>
-
-
-
-</Link>
-    ))}
-     
-  </div>
   </div>
   </div>
   </>
