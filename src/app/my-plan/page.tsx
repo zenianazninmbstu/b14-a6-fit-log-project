@@ -2,17 +2,48 @@
 
 import Link from "next/link";
 import { Clock, Flame, Star, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFitLog } from "../context/FitLogContext";
 
 
 
 export default function MyPlan() {
-const { plan, saved, removeFromPlan, markAsDone, showToast } = useFitLog();
+const {
+  plan,
+  saved,
+  removeFromPlan,
+  removeFromSaved,
+  markAsDone,
+  showToast,
+} = useFitLog();
+
+const [loading, setLoading] = useState(true);
 
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
 
   const currentWorkouts = activeTab === "plan" ? plan : saved;
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setLoading(false);
+  }, 500);
+
+  return () => clearTimeout(timer);
+}, []);
+
+
+
+if (loading) {
+  return (
+    <main className="mx-4 min-h-screen bg-black py-12 text-white">
+      <div className="mx-8 flex min-h-[400px] items-center justify-center">
+        <p className="text-sm text-gray-400">Loading workouts…</p>
+      </div>
+    </main>
+  );
+}
+
+
 
   const totalMinutes = plan.reduce(
     (total: number, workout: any) => total + workout.duration,
@@ -201,9 +232,14 @@ const { plan, saved, removeFromPlan, markAsDone, showToast } = useFitLog();
 )}
 
                       <button
-                          onClick={() => {
-  removeFromPlan(workout.id);
-  showToast("Workout removed");
+onClick={() => {
+  if (activeTab === "plan") {
+    removeFromPlan(workout.id);
+    showToast("Workout removed from plan");
+  } else {
+    removeFromSaved(workout.id);
+    showToast("Workout removed from saved");
+  }
 }}
                           className="flex items-center justify-center rounded-md border border-gray-600 px-3 py-2 text-white"
 >

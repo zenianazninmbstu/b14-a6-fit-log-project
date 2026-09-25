@@ -38,6 +38,13 @@ export function FitLogProvider({
     );
   };
 
+
+  const removeFromSaved = (workoutId: number) => {
+  setSaved((currentSaved) =>
+    currentSaved.filter((workout) => workout.id !== workoutId)
+  );
+};
+
   const markAsDone = (workoutId: number) => {
     setPlan((currentPlan) =>
       currentPlan.filter((workout) => workout.id !== workoutId)
@@ -64,6 +71,7 @@ export function FitLogProvider({
         removeFromPlan,
         markAsDone,
         showToast,
+        removeFromSaved,
       }}
     >
       {children}
