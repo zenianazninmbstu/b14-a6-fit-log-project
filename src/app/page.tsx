@@ -38,14 +38,14 @@ export default async function Home() {
 <>
 
 
-   <div className="mx-4 bg-black ">
+   <div className=" bg-black ">
       <Banner />
     </div>
-<div id="library" className="min-h-screen bg-black mx-4 ">
-   <div className="mx-8">
+<div id="library" className="min-h-screen bg-black">
+  <div className="mx-2 md:mx-8">
  <h1 className="text-3xl font-bold text-white mt-20">THE LIBRARY</h1>
 
-<p className=" text-white m-0 mb-6">
+<p className=" text-white m-0 mb-10">
   Twelve lifts covering every major muscle group.
 </p>
 

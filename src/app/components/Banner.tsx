@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Banner = () => {
   return (
-    <div className="mx-4 bg-black pt-8 md:pt-16">
+    <div className=" bg-black pt-8 md:pt-16">
       <div className="mx-2 overflow-hidden rounded-xl bg-[#15171D] p-6 md:mx-8 md:p-10">
 
         <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-10">
