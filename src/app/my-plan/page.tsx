@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Clock, Flame, Star, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFitLog } from "../context/FitLogContext";
+import SortDropdown from "../components/SortDropdown";
 
 
 
@@ -21,7 +22,23 @@ const [loading, setLoading] = useState(true);
 
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
 
-  const currentWorkouts = activeTab === "plan" ? plan : saved;
+const [sortBy, setSortBy] = useState<
+  "duration" | "calories" | "rating"
+>("duration");
+
+const currentWorkouts = activeTab === "plan" ? plan : saved;
+
+const sortedWorkouts = [...currentWorkouts].sort((a, b) => {
+  if (sortBy === "duration") {
+    return a.duration - b.duration;
+  }
+
+  if (sortBy === "calories") {
+    return a.caloriesBurned - b.caloriesBurned;
+  }
+
+  return a.rating - b.rating;
+});
 
 useEffect(() => {
   const timer = setTimeout(() => {
@@ -105,31 +122,48 @@ if (loading) {
         </div>
 
         {/* TABS */}
-        <div className="mt-10 flex gap-8 border-b border-gray-800">
+       {/* TABS + SORT */}
+<div className="mt-10 flex items-center justify-between">
 
-          <button
-            onClick={() => setActiveTab("plan")}
-            className={`pb-3 text-sm font-bold ${
-              activeTab === "plan"
-                ? "border-b-2 border-lime-400 text-lime-400"
-                : "text-gray-500"
-            }`}
-          >
-            Today's Plan
-          </button>
+  {/* TABS */}
+  <div className="flex gap-1 rounded-md border border-gray-800 bg-[#15171c] p-1">
 
-          <button
-            onClick={() => setActiveTab("saved")}
-            className={`pb-3 text-sm font-bold ${
-              activeTab === "saved"
-                ? "border-b-2 border-lime-400 text-lime-400"
-                : "text-gray-500"
-            }`}
-          >
-            Saved
-          </button>
+    <button
+      onClick={() => setActiveTab("plan")}
+      className={`rounded-md px-4 py-2 text-xs font-bold ${
+        activeTab === "plan"
+          ? "bg-[#252932] text-white"
+          : "text-gray-500"
+      }`}
+    >
+      Today's Plan
+    </button>
 
-        </div>
+    <button
+      onClick={() => setActiveTab("saved")}
+      className={`rounded-md px-4 py-2 text-xs font-bold ${
+        activeTab === "saved"
+          ? "bg-[#252932] text-white"
+          : "text-gray-500"
+      }`}
+    >
+      Saved
+    </button>
+
+  </div>
+
+  {/* SORT */}
+<div className="flex items-center gap-2">
+  <span className="text-xs text-gray-500">
+    Sort By
+  </span>
+
+  <SortDropdown
+    sortBy={sortBy}
+    setSortBy={setSortBy}
+  />
+</div>
+</div>
 
         {/* WORKOUT LIST */}
         <div className="mt-8">
@@ -159,103 +193,99 @@ if (loading) {
           ) : (
 
             /* WORKOUT CARDS */
-            <div className="space-y-5">
+           <div className="space-y-3">
 
-              {currentWorkouts.map((workout: any) => (
+  {sortedWorkouts.map((workout: any) => (
 
-                <div
-                  key={workout.id}
-                  className="flex flex-col gap-5 rounded-xl border border-gray-800 bg-[#15171c] p-4 md:flex-row"
-                >
+    <div
+      key={workout.id}
+      className="flex flex-col gap-4 rounded-xl border border-gray-800 bg-[#15171c] p-3 sm:flex-row sm:items-center"
+    >
 
-                  {/* THUMBNAIL */}
-                  <img
-                    src={workout.image}
-                    alt={workout.name}
-                    className="w-full rounded-lg object-cover md:w-52"
-                  />
+      {/* THUMBNAIL */}
+      <img
+        src={workout.image}
+        alt={workout.name}
+        className="h-24 w-full rounded-lg object-cover sm:w-24"
+      />
 
-                  {/* WORKOUT INFO */}
-                  <div className="flex flex-1 flex-col">
+      {/* WORKOUT INFO */}
+      <div className="min-w-0 flex-1">
 
-                    <h2 className="text-xl font-bold uppercase">
-                      {workout.name}
-                    </h2>
+        <h2 className="text-sm font-bold uppercase">
+          {workout.name}
+        </h2>
 
-                    <p className="mt-1 text-sm text-gray-400">
-                      {workout.equipment}
-                    </p>
+        <p className="mt-1 text-xs text-gray-400">
+          {workout.equipment}
+        </p>
 
-                    {/* STATS */}
-                    <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-gray-400">
+        {/* STATS */}
+        <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-gray-400">
 
-                      <span className="flex items-center gap-1">
-                        <Clock size={15} />
-                        {workout.duration} min
-                      </span>
+          <span className="flex items-center gap-1">
+            <Clock size={13} />
+            {workout.duration} min
+          </span>
 
-                      <span className="flex items-center gap-1">
-                        <Flame size={15} />
-                        {workout.caloriesBurned} kcal
-                      </span>
+          <span className="flex items-center gap-1">
+            <Flame size={13} />
+            {workout.caloriesBurned} kcal
+          </span>
 
-                      <span className="flex items-center gap-1">
-                        <Star size={15} />
-                        {workout.rating}
-                      </span>
+          <span className="flex items-center gap-1">
+            <Star size={13} />
+            {workout.rating}
+          </span>
 
-                    </div>
+        </div>
 
-                    {/* ACTION BUTTONS */}
-                    <div className="mt-6 flex flex-wrap gap-3">
+      </div>
 
-                      <Link
-                        href={`/workouts/${workout.id}`}
-                        className="rounded-md border border-gray-600 px-4 py-2 text-sm font-bold text-white"
-                      >
-                        View Details
-                      </Link>
+      {/* ACTION BUTTONS */}
+      <div className="flex shrink-0 items-center gap-2">
 
+        <Link
+          href={`/workouts/${workout.id}`}
+          className="rounded-full border border-gray-600 px-4 py-2 text-xs font-bold text-white"
+        >
+          View Details
+        </Link>
 
+        {activeTab === "plan" && (
+          <button
+            onClick={() => {
+              markAsDone(workout.id);
+              showToast("Workout marked as done");
+            }}
+            className="rounded-full bg-[#ccff00] px-4 py-2 text-xs font-bold text-black"
+          >
+            ✓ Mark as Done
+          </button>
+        )}
 
+        <button
+          onClick={() => {
+            if (activeTab === "plan") {
+              removeFromPlan(workout.id);
+              showToast("Workout removed from plan");
+            } else {
+              removeFromSaved(workout.id);
+              showToast("Workout removed from saved");
+            }
+          }}
+          className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:text-white"
+        >
+          <X size={15} />
+        </button>
 
-{activeTab === "plan" && (
-              <button
-              onClick={() => {
-             markAsDone(workout.id);
-            showToast("Workout marked as done");
-             }}
-           className="rounded-md bg-[#ccff00] px-4 py-2 text-sm font-bold text-black"
-           >
-       Mark as Done
-     </button>
-)}
+      </div>
 
-                      <button
-onClick={() => {
-  if (activeTab === "plan") {
-    removeFromPlan(workout.id);
-    showToast("Workout removed from plan");
-  } else {
-    removeFromSaved(workout.id);
-    showToast("Workout removed from saved");
-  }
-}}
-                          className="flex items-center justify-center rounded-md border border-gray-600 px-3 py-2 text-white"
->
-                          <X size={17} />
-                       </button>
+    </div>
 
-                    </div>
+  ))}
 
-                  </div>
-
-                </div>
-
-              ))}
-
-            </div>
-
+</div>
           )}
 
         </div>

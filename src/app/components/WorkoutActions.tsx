@@ -12,15 +12,20 @@ export default function WorkoutActions({
 }: WorkoutActionsProps) {
   const { addToPlan, saveWorkout, plan, saved, showToast } = useFitLog();
 
-  const handleAdd = () => {
-    if (plan.some((item: any) => item.id === workout.id)) {
-      showToast("Already in today's plan");
-      return;
-    }
+ const handleAdd = () => {
+  if (plan.length >= 5) {
+    showToast("Today's plan is full");
+    return;
+  }
 
-    addToPlan(workout);
-    showToast("Added to today's plan");
-  };
+  if (plan.some((item: any) => item.id === workout.id)) {
+    showToast("Already in today's plan");
+    return;
+  }
+
+  addToPlan(workout);
+  showToast("Added to today's plan");
+};
 
   const handleSave = () => {
     if (saved.some((item: any) => item.id === workout.id)) {

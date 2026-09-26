@@ -1,9 +1,6 @@
-"use client";
 
 import { Star, Flame, Clock } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import SortDropdown from "./SortDropdown";
 
 type Workout = {
   id: number;
@@ -26,34 +23,12 @@ type WorkoutListProps = {
 };
 
 export default function WorkoutList({ workouts }: WorkoutListProps) {
-  const [sortBy, setSortBy] = useState<
-    "duration" | "calories" | "rating"
-  >("duration");
 
-  const sortedWorkouts = [...workouts].sort((a, b) => {
-    if (sortBy === "duration") {
-      return a.duration - b.duration;
-    }
-
-    if (sortBy === "calories") {
-      return a.caloriesBurned - b.caloriesBurned;
-    }
-
-    return a.rating - b.rating;
-  });
-
-  return (
+   return (
     <>
-      <div className="mb-6 flex items-center justify-between">
-       
-        <SortDropdown
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
-      </div>
-
+    
       <div className="grid grid-cols-1 gap-6 text-white md:grid-cols-2 lg:grid-cols-3">
-        {sortedWorkouts.map((workout) => (
+        {workouts.map((workout) => (
           <Link
             key={workout.id}
             href={`/workouts/${workout.id}`}

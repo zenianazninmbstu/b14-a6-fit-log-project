@@ -56,81 +56,78 @@ export default async function WorkoutDetails({ params }: PageProps) {
             </div>
 
             {/* KEY SPECS */}
-            <div className="mt-8 rounded-xl border border-gray-800 bg-[#15171c] p-5">
-              <h2 className="mb-5 text-lg font-bold">
-                KEY SPECS
-              </h2>
+            
+<div className="mt-8 overflow-hidden rounded-xl border border-gray-800 bg-[#15171c]">
+  
 
-              <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+  <div className="divide-y divide-gray-800">
+    <div className="flex items-center justify-between px-5 py-4">
+      <span className="text-sm font-bold text-gray-400">
+        EQUIPMENT
+      </span>
+      <span className="text-sm font-semibold">
+        {workout.equipment}
+      </span>
+    </div>
 
-                <div>
-                  <p className="text-xs text-gray-500">
-                    EQUIPMENT
-                  </p>
-                  <p className="mt-1 text-sm font-semibold">
-                    {workout.equipment}
-                  </p>
-                </div>
+    <div className="flex items-center justify-between px-5 py-4">
+      <span className="text-sm font-bold text-gray-400">
+        DIFFICULTY
+      </span>
+      <span className="text-sm font-semibold">
+        {workout.difficulty}
+      </span>
+    </div>
 
-                <div>
-                  <p className="text-xs text-gray-500">
-                    DIFFICULTY
-                  </p>
-                  <p className="mt-1 text-sm font-semibold">
-                    {workout.difficulty}
-                  </p>
-                </div>
+    <div className="flex items-center justify-between px-5 py-4">
+      <span className="text-sm font-bold text-gray-400">
+        SETS
+      </span>
+      <span className="text-sm font-semibold">
+        {workout.sets}
+      </span>
+    </div>
 
-                <div>
-                  <p className="text-xs text-gray-500">
-                    SETS
-                  </p>
-                  <p className="mt-1 text-sm font-semibold">
-                    {workout.sets}
-                  </p>
-                </div>
+    <div className="flex items-center justify-between px-5 py-4">
+      <span className="text-sm font-bold text-gray-400">
+        REPS
+      </span>
+      <span className="text-sm font-semibold">
+        {workout.reps}
+      </span>
+    </div>
 
-                <div>
-                  <p className="text-xs text-gray-500">
-                    REPS
-                  </p>
-                  <p className="mt-1 text-sm font-semibold">
-                    {workout.reps}
-                  </p>
-                </div>
+    <div className="flex items-center justify-between px-5 py-4">
+      <span className="text-sm font-bold text-gray-400">
+        DURATION
+      </span>
+      <span className="flex items-center gap-1 text-sm font-semibold">
+        <Clock size={14} />
+        {workout.duration} min
+      </span>
+    </div>
 
-                <div>
-                  <p className="text-xs text-gray-500">
-                    DURATION
-                  </p>
-                  <p className="mt-1 flex items-center gap-1 text-sm font-semibold">
-                    <Clock size={14} />
-                    {workout.duration} min
-                  </p>
-                </div>
+    <div className="flex items-center justify-between px-5 py-4">
+      <span className="text-sm font-bold text-gray-400">
+        CALORIES
+      </span>
+      <span className="flex items-center gap-1 text-sm font-semibold">
+        <Flame size={14} />
+        {workout.caloriesBurned} kcal
+      </span>
+    </div>
 
-                <div>
-                  <p className="text-xs text-gray-500">
-                    CALORIES
-                  </p>
-                  <p className="mt-1 flex items-center gap-1 text-sm font-semibold">
-                    <Flame size={14} />
-                    {workout.caloriesBurned} kcal
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs text-gray-500">
-                    RATING
-                  </p>
-                  <p className="mt-1 flex items-center gap-1 text-sm font-semibold">
-                    <Star size={14} className="text-yellow-400" />
-                    {workout.rating}
-                  </p>
-                </div>
-
-              </div>
-            </div>
+    <div className="flex items-center justify-between px-5 py-4">
+      <span className="text-sm font-bold text-gray-400">
+        RATING
+      </span>
+      <span className="flex items-center gap-1 text-sm font-semibold">
+        <Star size={14} className="text-yellow-400" />
+        {workout.rating}
+      </span>
+    </div>
+  </div>
+</div>
 
             {/* INSTRUCTIONS */}
             <div className="mt-10">
